@@ -12,47 +12,45 @@ var peer = new Peer(undefined, {
 
 let myVideoStream;
 
-navigator.mediaDevices
-  .getUserMedia({
-    video: true,
-    audio: true,
-  })
-  .then((stream) => {
-    myVideoStream = stream;
-    addVideoStream(myVideo, stream);
+peer.on("open", (id) => {
+  navigator.mediaDevices
+    .getUserMedia({
+      video: true,
+      audio: true,
+    })
+    .then((stream) => {
+      myVideoStream = stream;
+      addVideoStream(myVideo, stream);
 
-    peer.on("call", (call) => {
-      console.log("Helo!");
-      call.answer(stream);
-      const video = document.createElement("video");
-      call.on("stream", (userVideoStream) => {
-        addVideoStream(video, userVideoStream);
+      socket.on("user-connected", (userId) => {
+        connectToNewUser(userId, stream);
+      });
+      socket.emit("join-room", ROOM_ID, id);
+      peer.on("call", (call) => {
+        console.log("Helo!");
+        call.answer(stream);
+        const video = document.createElement("video");
+        call.on("stream", (userVideoStream) => {
+          addVideoStream(video, userVideoStream);
+        });
+      });
+
+      let text = $("input");
+
+      $("html").keydown((e) => {
+        if (e.which == 13 && text.val().length !== 0) {
+          socket.emit("message", text.val());
+          text.val("");
+        }
+      });
+
+      socket.on("createMessage", (message) => {
+        $(".messages").append(
+          `<li class="message"><b>user</b><br/>${message}</li>`
+        );
+        scrollToBottom();
       });
     });
-
-    socket.on("user-connected", (userId) => {
-      connectToNewUser(userId, stream);
-    });
-
-    let text = $("input");
-
-    $("html").keydown((e) => {
-      if (e.which == 13 && text.val().length !== 0) {
-        socket.emit("message", text.val());
-        text.val("");
-      }
-    });
-
-    socket.on("createMessage", (message) => {
-      $(".messages").append(
-        `<li class="message"><b>user</b><br/>${message}</li>`
-      );
-      scrollToBottom();
-    });
-  });
-
-peer.on("open", (id) => {
-  socket.emit("join-room", ROOM_ID, id);
 });
 
 const connectToNewUser = (userId, stream) => {
