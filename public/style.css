@@ -1,0 +1,143 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#video-grid {
+  display: flex;
+  justify-content: center;
+}
+
+video {
+  height: 300px;
+  width: 400px;
+  object-fit: cover;
+}
+
+.main {
+  height: 100vh;
+  display: flex;
+}
+
+.main__left {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+}
+
+.main__right {
+  display: flex;
+  flex-direction: column;
+  background-color: #242424;
+  border-left: 1px solid #3d3d42;
+  flex: 0.2;
+}
+
+.main__videos {
+  flex-grow: 1;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main__controls {
+  background-color: #1c1e20;
+  color: #d2d2d2;
+  display: flex;
+  padding: 5px;
+  justify-content: space-between;
+}
+
+.main__controls__button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 10px;
+  min-width: 80px;
+  cursor: pointer;
+}
+
+.main__controls__block {
+  display: flex;
+}
+
+.main__controls__button i {
+  font-size: 24px;
+}
+
+.main__controls__button:hover {
+  background-color: #343434;
+  border-radius: 5px;
+}
+
+.leave__meeting {
+  color: #eb534b;
+}
+
+.main__header {
+  color: #f5f5f5;
+  text-align: center;
+}
+
+.main__chat__window {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.main__message__container {
+  padding: 22px 12px;
+  display: flex;
+}
+
+.main__message__container input {
+  flex-grow: 1;
+  background-color: transparent;
+  border: none;
+  color: #f5f5f5;
+}
+
+.messages {
+  color: white;
+  list-style: none;
+}
+
+.unmute,
+.stop {
+  color: #cc3b33;
+}
+
+@media only screen and (max-width: 900px) {
+  .main {
+    flex-direction: column;
+  }
+
+  .main__controls {
+    justify-content: center;
+  }
+
+  .main__controls__block:nth-child(2) {
+    display: none;
+  }
+
+  .main__controls__block:nth-child(3) {
+    display: none;
+  }
+
+  .main__controls__button {
+  }
+
+  .messages {
+    height: 150px;
+  }
+
+  #video-grid {
+    flex-direction: column;
+  }
+
+  video {
+    height: 150px;
+    width: 320px;
+  }
+}
