@@ -138,6 +138,6 @@ video {
 
   video {
     height: 150px;
-    width: 320px;
+    width: auto;
   }
 }
