@@ -132,10 +132,6 @@ video {
     height: 150px;
   }
 
-  #video-grid {
-    flex-direction: column;
-  }
-
   video {
     height: 150px;
     width: auto;
